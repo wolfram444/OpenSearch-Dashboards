@@ -238,8 +238,5 @@ in
   };
 
 
-  meta = {
-    maintainers = [ ]; # add lib.maintainers.yourhandle here
-    doc = ./opensearch-dashboards.md;
-  };
+ 
 }
