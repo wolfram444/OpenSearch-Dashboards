@@ -54,7 +54,7 @@ in
 
     opensearchHosts = lib.mkOption {
       type = lib.types.listOf lib.types.str;
-      default = [ "https://localhost:9200" ];
+      default = [ "http://localhost:9200" ];
       example = [
         "https://node1:9200"
         "https://node2:9200"
