@@ -89,17 +89,6 @@ in
         };
       };
       default = { };
-      description = ''
-        Raw OpenSearch Dashboards configuration written to
-        <filename>opensearch_dashboards.yml</filename>.
-
-        Keys are the YAML dotted-path names (e.g.
-        <literal>server.basePath</literal>). Values override the
-        convenience options above.
-
-        See <link xlink:href="https://docs.opensearch.org/latest/install-and-configure/install-dashboards/settings/"/>
-        for all available options.
-      '';
       example = lib.literalExpression ''
         {
           "server.basePath"               = "/dashboards";
