@@ -15,7 +15,6 @@ in
 
 {
 
-
   options.services.opensearch-dashboards = {
 
     enable = lib.mkEnableOption "OpenSearch Dashboards";
@@ -38,8 +37,6 @@ in
       description = "Group under which OpenSearch Dashboards runs.";
     };
 
-   
-
     listenAddress = lib.mkOption {
       type = lib.types.str;
       default = "127.0.0.1";
@@ -61,8 +58,6 @@ in
       ];
       description = "List of OpenSearch node URLs.";
     };
-
-   
 
     settings = lib.mkOption {
       type = lib.types.submodule {
@@ -100,8 +95,6 @@ in
       '';
     };
 
-  
-
     dataDir = lib.mkOption {
       type = lib.types.path;
       default = "/var/lib/opensearch-dashboards";
@@ -124,8 +117,6 @@ in
     };
   };
 
-
-
   config = lib.mkIf cfg.enable {
 
     # Ensure the convenience options are forwarded into `settings` when the
@@ -140,22 +131,16 @@ in
       }
     ];
 
-  
-
-    users.users = lib.optionalAttrs (cfg.user == "opensearch-dashboards") {
-      opensearch-dashboards = {
+    users.users.${cfg.user}  = {
         description = "OpenSearch Dashboards service user";
         group = cfg.group;
         home = cfg.dataDir;
         isSystemUser = true;
       };
-    };
 
-    users.groups = lib.optionalAttrs (cfg.group == "opensearch-dashboards") {
-      opensearch-dashboards = { };
-    };
+    users.groups.${cfg.group} = {
 
-   
+    };
 
     systemd.services.opensearch-dashboards = {
       description = "OpenSearch Dashboards";
@@ -170,7 +155,6 @@ in
       environment = {
         # Let OSD find its own Node.js runtime shipped inside the package
         NODE_HOME = "${cfg.package}";
-        # Disable Chrome's sandbox inside OSD's headless Chromium (used for PDF export)
         DISABLE_SECURITY_PLUGIN = "true";
       }
       // cfg.environment;
@@ -221,11 +205,8 @@ in
       '';
     };
 
-
     #
-      networking.firewall.allowedTCPPorts = [ config.services.opensearch-dashboards.port ];
+    networking.firewall.allowedTCPPorts = [ config.services.opensearch-dashboards.port ];
   };
 
-
- 
 }

@@ -8,7 +8,7 @@
   };
 
   outputs =
-    inputs@{ flake-parts, nixpkgs, ... }:
+    inputs@{ flake-parts, nixpkgs, self, ... }:
     flake-parts.lib.mkFlake { inherit inputs; } {
 
       systems = [ "x86_64-linux" ];
@@ -18,7 +18,11 @@
       };
 
       perSystem =
-        { pkgs, self', ... }:
+        {
+          pkgs,
+          self',
+          ...
+        }:
         {
 
           formatter = pkgs.nixfmt;
@@ -39,6 +43,31 @@
               # jdk17
             ];
           };
+          checks.test = pkgs.testers.runNixOSTest {
+            name = "config-test";
+
+            nodes.machine =
+              { pkgs, ... }:
+              {
+                imports = [
+                  self
+                  .nixosModules.default
+
+                  (
+                    { pkgs, ... }:
+                    {
+                      services.opensearch-dashboards.enable = true;
+                      system.stateVersion = "25.11";
+                    }
+                  )
+                ];
+              };
+
+            node.pkgsReadOnly = false;
+            skipTypeCheck = true;
+            testScript = builtins.readFile ./test.py;
+          };
+
         };
     };
 }
