@@ -45,7 +45,7 @@ in
 
     port = lib.mkOption {
       type = lib.types.port;
-      default = 5601;
+      default = 5603;
       description = "TCP port for the HTTP server.";
     };
 
