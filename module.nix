@@ -155,7 +155,7 @@ in
       environment = {
         # Let OSD find its own Node.js runtime shipped inside the package
         NODE_HOME = "${cfg.package}";
-        DISABLE_SECURITY_PLUGIN = "true";
+        # DISABLE_SECURITY_PLUGIN = "true";
       }
       // cfg.environment;
 
