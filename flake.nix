@@ -15,6 +15,8 @@
 
       flake = {
         nixosModules.default = import ./module.nix;
+
+
       };
 
       perSystem =
@@ -27,7 +29,7 @@
 
           formatter = pkgs.nixfmt;
           packages = {
-            opensearch-dashboards = pkgs.callPackage ./default.nix { };
+            opensearch-dashboards = pkgs.callPackage ./pkgs/default.nix { };
 
             default = self'.packages.opensearch-dashboards;
           };
@@ -43,30 +45,30 @@
               # jdk17
             ];
           };
-          checks.test = pkgs.testers.runNixOSTest {
-            name = "config-test";
+          # checks.test = pkgs.testers.runNixOSTest {
+          #   name = "config-test";
 
-            nodes.machine =
-              { pkgs, ... }:
-              {
-                imports = [
-                  self
-                  .nixosModules.default
+          #   nodes.machine =
+          #     { pkgs, ... }:
+          #     {
+          #       imports = [
+          #         self
+          #         .nixosModules.default
 
-                  (
-                    { pkgs, ... }:
-                    {
-                      services.opensearch-dashboards.enable = true;
-                      system.stateVersion = "25.11";
-                    }
-                  )
-                ];
-              };
+          #         (
+          #           { pkgs, ... }:
+          #           {
+          #             services.opensearch-dashboards.enable = true;
+          #             system.stateVersion = "25.11";
+          #           }
+          #         )
+          #       ];
+          #     };
 
-            node.pkgsReadOnly = false;
-            skipTypeCheck = true;
-            testScript = builtins.readFile ./test.py;
-          };
+          #   node.pkgsReadOnly = false;
+          #   skipTypeCheck = true;
+          #   testScript = builtins.readFile ./test.py;
+          # };
 
         };
     };

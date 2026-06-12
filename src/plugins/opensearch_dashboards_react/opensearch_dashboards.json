@@ -1,7 +1,0 @@
-{
-  "id": "opensearchDashboardsReact",
-  "version": "opensearchDashboards",
-  "ui": true,
-  "server": false,
-  "requiredBundles": ["opensearchDashboardsUtils"]
-}

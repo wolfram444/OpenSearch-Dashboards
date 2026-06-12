@@ -1,7 +1,0 @@
-{
-  "id": "bfetch",
-  "version": "opensearchDashboards",
-  "server": true,
-  "ui": true,
-  "requiredBundles": ["opensearchDashboardsUtils"]
-}

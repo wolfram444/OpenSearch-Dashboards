@@ -1,9 +1,0 @@
-{
-  "id": "opensearchDashboardsOverview",
-  "version": "opensearchDashboards",
-  "server": false,
-  "ui": true,
-  "requiredPlugins": ["navigation", "data", "home"],
-  "optionalPlugins": [],
-  "requiredBundles": ["opensearchDashboardsReact"]
-}

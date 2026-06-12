@@ -1,9 +1,0 @@
-// Jest Snapshot v1, https://goo.gl/fbAQLP
-
-exports[`Datasource Management: Header should render normally 1`] = `
-<EuiOverlayMask>
-  <EuiLoadingSpinner
-    size="xl"
-  />
-</EuiOverlayMask>
-`;

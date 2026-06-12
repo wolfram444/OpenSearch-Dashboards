@@ -9,7 +9,7 @@ let
   cfg = config.services.opensearch-dashboards;
   format = pkgs.formats.yaml { };
 
-  # Merge default settings with user-provided settings
+  # Merge default settings with user provided settings
   settingsFile = format.generate "opensearch_dashboards.yml" cfg.settings;
 in
 
@@ -45,7 +45,7 @@ in
 
     port = lib.mkOption {
       type = lib.types.port;
-      default = 5603;
+      default = 5601;
       description = "TCP port for the HTTP server.";
     };
 
@@ -66,19 +66,16 @@ in
         options = {
           "server.host" = lib.mkOption {
             type = lib.types.str;
-            default = cfg.listenAddress;
             description = "Bind address (server.host in YAML).";
           };
 
           "server.port" = lib.mkOption {
             type = lib.types.port;
-            default = cfg.port;
             description = "HTTP port (server.port in YAML).";
           };
 
           "opensearch.hosts" = lib.mkOption {
             type = lib.types.listOf lib.types.str;
-            default = cfg.opensearchHosts;
             description = "OpenSearch hosts (opensearch.hosts in YAML).";
           };
         };
@@ -121,15 +118,14 @@ in
 
     # Ensure the convenience options are forwarded into `settings` when the
     # user has not overridden them explicitly.
-    services.opensearch-dashboards.settings = lib.mkMerge [
+    services.opensearch-dashboards.settings =
       {
         "server.host" = lib.mkDefault cfg.listenAddress;
         "server.port" = lib.mkDefault cfg.port;
         "opensearch.hosts" = lib.mkDefault cfg.opensearchHosts;
         # Point at our writable data directory
         "path.data" = lib.mkDefault cfg.dataDir;
-      }
-    ];
+      };
 
     users.users.${cfg.user}  = {
         description = "OpenSearch Dashboards service user";
@@ -153,8 +149,6 @@ in
       ];
 
       environment = {
-        # Let OSD find its own Node.js runtime shipped inside the package
-        NODE_HOME = "${cfg.package}";
         DISABLE_SECURITY_PLUGIN = "false";
       }
       // cfg.environment;

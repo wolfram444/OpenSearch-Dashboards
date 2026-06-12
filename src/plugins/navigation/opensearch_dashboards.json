@@ -1,8 +1,0 @@
-{
-  "id": "navigation",
-  "version": "opensearchDashboards",
-  "server": false,
-  "ui": true,
-  "requiredPlugins": ["data"],
-  "requiredBundles": ["opensearchDashboardsReact", "dataSourceManagement"]
-}

@@ -1,6 +1,0 @@
-{
-  "id": "opensearchDashboardsLegacy",
-  "version": "opensearchDashboards",
-  "server": true,
-  "ui": true
-}

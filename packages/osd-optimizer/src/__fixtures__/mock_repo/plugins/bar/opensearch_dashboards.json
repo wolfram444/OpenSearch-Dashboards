@@ -1,5 +1,0 @@
-{
-  "id": "bar",
-  "ui": true,
-  "requiredBundles": ["foo"]
-}
