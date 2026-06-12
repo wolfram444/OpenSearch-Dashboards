@@ -118,21 +118,20 @@ in
 
     # Ensure the convenience options are forwarded into `settings` when the
     # user has not overridden them explicitly.
-    services.opensearch-dashboards.settings =
-      {
-        "server.host" = lib.mkDefault cfg.listenAddress;
-        "server.port" = lib.mkDefault cfg.port;
-        "opensearch.hosts" = lib.mkDefault cfg.opensearchHosts;
-        # Point at our writable data directory
-        "path.data" = lib.mkDefault cfg.dataDir;
-      };
+    services.opensearch-dashboards.settings = {
+      "server.host" = lib.mkDefault cfg.listenAddress;
+      "server.port" = lib.mkDefault cfg.port;
+      "opensearch.hosts" = lib.mkDefault cfg.opensearchHosts;
+      # Point at our writable data directory
+      "path.data" = lib.mkDefault cfg.dataDir;
+    };
 
-    users.users.${cfg.user}  = {
-        description = "OpenSearch Dashboards service user";
-        group = cfg.group;
-        home = cfg.dataDir;
-        isSystemUser = true;
-      };
+    users.users.${cfg.user} = {
+      description = "OpenSearch Dashboards service user";
+      group = cfg.group;
+      home = cfg.dataDir;
+      isSystemUser = true;
+    };
 
     users.groups.${cfg.group} = {
 
