@@ -21,7 +21,7 @@ in
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.callPackage ./default.nix { };
+      default = pkgs.callPackage ./pkgs/default.nix { };
       description = "OpenSearch Dashboards package";
     };
 

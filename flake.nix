@@ -27,7 +27,7 @@
         }:
         {
 
-          formatter = pkgs.nixfmt;
+          formatter = pkgs.nixfmt-tree;
           packages = {
             opensearch-dashboards = pkgs.callPackage ./pkgs/default.nix { };
 
