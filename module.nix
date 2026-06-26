@@ -1,3 +1,4 @@
+flake:
 {
   config,
   lib,
@@ -21,7 +22,8 @@ in
 
     package = lib.mkOption {
       type = lib.types.package;
-      default = pkgs.callPackage ./pkgs/default.nix { };
+      default = flake.packages.${pkgs.stdenv.hostPlatform.system}.default;
+      # default = pkgs.callPackage ./pkgs/default.nix { };
       description = "OpenSearch Dashboards package";
     };
 
@@ -154,7 +156,7 @@ in
 
       serviceConfig = {
         ExecStart = lib.escapeShellArgs [
-          "${cfg.package}/bin/opensearch-dashboards"
+          "${lib.getExe cfg.package}"
           "--config"
           settingsFile
           "--path.data"
@@ -166,23 +168,10 @@ in
         User = cfg.user;
         Group = cfg.group;
 
-        # Filesystem hardening
-        StateDirectory = baseNameOf cfg.dataDir;
-        StateDirectoryMode = "0750";
-        LogsDirectory = baseNameOf cfg.logDir;
-        LogsDirectoryMode = "0750";
-        RuntimeDirectory = "opensearch-dashboards";
-        RuntimeDirectoryMode = "0750";
+        # Security
 
-        # Security hardening
-        NoNewPrivileges = true;
         PrivateTmp = true;
         ProtectHome = true;
-        ProtectSystem = "strict";
-        ReadWritePaths = [
-          cfg.dataDir
-          cfg.logDir
-        ];
 
         # Resource limits
         LimitNOFILE = 65536;
@@ -191,11 +180,6 @@ in
         RestartSec = 5;
       };
 
-      preStart = ''
-        # Make sure data and log directories exist and are owned correctly
-        install -d -m 0750 -o ${cfg.user} -g ${cfg.group} \
-          "${cfg.dataDir}" "${cfg.logDir}"
-      '';
     };
 
     #
