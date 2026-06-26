@@ -19,6 +19,12 @@ stdenv.mkDerivation rec {
     hash = "sha256-g0aKKvi2rAd3AFdlfkotzoyREfoSTKJFI7bihjFu2wU=";
   };
 
+    patches = [
+    # OpenSearch Dashboard specifies that it wants nodejs 14.20.1 but nodejs in nixpkgs is at 14.21.1.
+    ./disable-nodejs-version-check.patch
+  ];
+
+
   # Disables cleaning of debugging symbols
   dontStrip = true;
 
