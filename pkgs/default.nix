@@ -45,7 +45,7 @@ stdenv.mkDerivation rec {
         }"
       sed -i 's@NODE=.*@NODE=${nodejs}/bin/node@' $bin
     done
-    # rm -rf $out/libexec/opensearch-dashboards/plugins/securityDashboards
+    rm -rf $out/libexec/opensearch-dashboards/plugins/securityDashboards
   '';
 
   meta = {
